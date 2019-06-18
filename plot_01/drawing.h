@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QPoint>
+#include <QPushButton>
 #include "globals.h"
 
 namespace Ui {
@@ -27,6 +28,9 @@ protected:
     void mousePressEvent(QMouseEvent*);
     void mouseMoveEvent(QMouseEvent*);
     void mouseReleaseEvent(QMouseEvent*);
+
+private slots:
+    void Expand(struct Placeplot);
 
 private:
     Ui::drawing *ui;

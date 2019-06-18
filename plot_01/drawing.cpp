@@ -12,6 +12,7 @@ drawing::drawing(QWidget *parent) :
     Plot_image = QImage(4000,2000,QImage::Format_RGB32);
     Plot_image.fill(backcolor);
     MouseFlag=false;
+
 }
 
 drawing::~drawing()
@@ -21,6 +22,7 @@ drawing::~drawing()
 
 void drawing::paintplot(QImage&Plot_image)
 {
+
     QPainter p(&Plot_image);
     //设定画笔
     QPen pen;
@@ -54,11 +56,11 @@ void drawing::paintplot(QImage&Plot_image)
         float x_axis=globals::transitionList[tran_num].x;
         float y_axis=globals::transitionList[tran_num].y;
         p.drawText(15, y_axis,globals::transitionList[tran_num].name);
-        if(globals::transitionList[tran_num].value[0]==1)
+        if(globals::transitionList[tran_num].value[0]==0)
         {
             p.drawLine(x_axis, y_axis + 20,x_axis + 100, y_axis + 20);
         }
-        else if(globals::transitionList[tran_num].value[0]==0)
+        else if(globals::transitionList[tran_num].value[0]==1)
         {
             p.drawLine(x_axis, y_axis - 20,x_axis + 100, y_axis - 20);
         }
@@ -69,12 +71,12 @@ void drawing::paintplot(QImage&Plot_image)
             {
                 p.drawLine(x_axis, y_axis + 20,x_axis, y_axis - 20);
             }
-            if(globals::transitionList[tran_num].value[i]==1)
+            if(globals::transitionList[tran_num].value[i]==0)
             {
                 p.drawLine(x_axis, y_axis + 20,x_axis + 100, y_axis + 20);
                 x_axis+=100;
             }
-            else if(globals::transitionList[tran_num].value[i]==0)
+            else if(globals::transitionList[tran_num].value[i]==1)
             {
                 p.drawLine(x_axis, y_axis - 20,x_axis + 100, y_axis - 20);
                 x_axis+=100;
@@ -118,7 +120,7 @@ void drawing::paintplot(QImage&Plot_image)
                 pen.setColor(Qt::black);
                 p.setPen(pen);
                 x_axis+=100;
-            }
+            }           
         }
         pen.setColor(Qt::black);
         p.setPen(pen);
@@ -126,6 +128,7 @@ void drawing::paintplot(QImage&Plot_image)
         p.setFont(font);
     }
     update();
+    //delete newButton;
 }
 
 void drawing::lineplot(QImage&Line_image)
@@ -151,7 +154,7 @@ void drawing::lineplot(QImage&Line_image)
     font.setPointSize(10);
     //将字体交给“画家”
     p.setFont(font);
-    p.drawLine(MousePoint.rx(), 70,MousePoint.rx(), 125+80*(globals::placeList.count()+globals::transitionList.count()-1));
+    p.drawLine(MousePoint.rx(), 10,MousePoint.rx(), 125+80*(globals::placeList.count()+globals::transitionList.count()-1));
     pen.setColor(Qt::blue);
     p.setPen(pen);
     int time;
@@ -181,6 +184,19 @@ void drawing::lineplot(QImage&Line_image)
 void drawing::mousePressEvent(QMouseEvent*)
 {
     MouseFlag=true;
+    for(int i=0;i<globals::placeList.count();i++)
+    {
+            globals::placeList[i].ExpandButton = new QPushButton("+",this);
+            globals::placeList[i].ExpandButton->setGeometry(50,globals::placeList[i].y-20,20,20);
+            globals::placeList[i].ExpandButton->setFont(QFont("Time",10,QFont::Black));
+            globals::placeList[i].ExpandButton->show();
+            connect(globals::placeList[i].ExpandButton,SIGNAL(click(globals::placeList[i])),this,SLOT(Expand(globals::placeList[i])));
+    }
+}
+
+void drawing::Expand(struct Placeplot place)
+{
+    qDebug()<<place.name;
 }
 
 void drawing::mouseMoveEvent(QMouseEvent*event)
@@ -201,10 +217,12 @@ void drawing::mouseMoveEvent(QMouseEvent*event)
 void drawing::mouseReleaseEvent(QMouseEvent*)
 {
     MouseFlag=false;
+
 }
 
 void drawing::paintEvent(QPaintEvent *)
 {
+
     QPainter pai(this);
     pai.drawImage(0,0,Plot_image);
     pai.drawImage(0,0,Line_image);

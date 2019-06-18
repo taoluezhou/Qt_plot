@@ -3,13 +3,18 @@
 
 #include <QString>
 #include <QList>
+#include <QPushButton>
+
 struct Placeplot
 {
     //int ID;
     QString name;
     float x;
     float y;
+    float yExpand;
     QList<int> value;
+    QPushButton *ExpandButton;
+    bool isPushuButton;
 };
 
 struct Transitionplot
