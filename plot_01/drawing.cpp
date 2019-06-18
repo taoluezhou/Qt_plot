@@ -9,6 +9,13 @@ drawing::drawing(QWidget *parent) :
     QColor backcolor(255,255,255);
     Line_image = QImage(4000,2000,QImage::Format_ARGB32);//QImage::Format_ARGB32支持透明
     Line_image.fill(QColor(254,254,254,0));
+    Button_widget.setParent(this);
+    Button_widget.resize(4000,2000);
+    Button_widget.setAutoFillBackground(true);
+    //Button_widget->setAutoFillBackground(true);
+    QPalette palette;
+    palette.setColor(QPalette::Background, QColor(0,0,0,0));
+    Button_widget.setPalette(palette);
     Plot_image = QImage(4000,2000,QImage::Format_RGB32);
     Plot_image.fill(backcolor);
     MouseFlag=false;
@@ -127,6 +134,7 @@ void drawing::paintplot(QImage&Plot_image)
         font.setPointSize(20);
         p.setFont(font);
     }
+    //Buttonplot(Button_widget);
     update();
     //delete newButton;
 }
@@ -159,7 +167,7 @@ void drawing::lineplot(QImage&Line_image)
     p.setPen(pen);
     int time;
     time=(MousePoint.rx()-150)/100;
-    qDebug()<<time;
+    //qDebug()<<time;
     for(int i=0;i<globals::transitionList.count();i++)
     {
         p.drawText(80, globals::transitionList[i].y,QString("0x"+QString::number(globals::transitionList[i].value[time], 10)));
@@ -178,26 +186,34 @@ void drawing::lineplot(QImage&Line_image)
     {
         p.drawText(MousePoint.rx(), globals::placeList[i].y,QString("0x"+QString::number(globals::placeList[i].value[time], 10)));
     }
+    //Buttonplot(Button_widget);
+}
 
+void drawing::Buttonplot(QWidget&Button_widget)
+{
+   for(int i=0;i<globals::placeList.count();i++)
+    {
+        globals::placeList[i].ExpandButton = new QPushButton("+",&Button_widget);
+        globals::placeList[i].ExpandButton->setGeometry(50,globals::placeList[i].y-20,20,20);
+        globals::placeList[i].ExpandButton->setFont(QFont("Time",10,QFont::Black));
+        globals::placeList[i].ExpandButton->show();
+        connect(globals::placeList[i].ExpandButton,SIGNAL(clicked(globals::placeList[i])),this,SLOT(Expand(globals::placeList[i])));
+    }
 }
 
 void drawing::mousePressEvent(QMouseEvent*)
 {
     MouseFlag=true;
-    for(int i=0;i<globals::placeList.count();i++)
-    {
-            globals::placeList[i].ExpandButton = new QPushButton("+",this);
-            globals::placeList[i].ExpandButton->setGeometry(50,globals::placeList[i].y-20,20,20);
-            globals::placeList[i].ExpandButton->setFont(QFont("Time",10,QFont::Black));
-            globals::placeList[i].ExpandButton->show();
-            connect(globals::placeList[i].ExpandButton,SIGNAL(click(globals::placeList[i])),this,SLOT(Expand(globals::placeList[i])));
-    }
+    Buttonplot(Button_widget);// 放在这里比较流畅（？）
+
 }
 
 void drawing::Expand(struct Placeplot place)
 {
     qDebug()<<place.name;
+    qDebug()<<"111";
 }
+
 
 void drawing::mouseMoveEvent(QMouseEvent*event)
 {
@@ -212,21 +228,24 @@ void drawing::mouseMoveEvent(QMouseEvent*event)
     MousePoint=event->pos();
     Line_image.fill(QColor(254,254,254,0));
     lineplot(Line_image);
+    //Buttonplot(Button_widget);
 }
 
 void drawing::mouseReleaseEvent(QMouseEvent*)
 {
     MouseFlag=false;
-
+    //Buttonplot(Button_widget);
 }
 
 void drawing::paintEvent(QPaintEvent *)
 {
 
     QPainter pai(this);
+    //Buttonplot(Button_widget);
     pai.drawImage(0,0,Plot_image);
-    pai.drawImage(0,0,Line_image);
+    pai.drawImage(0,0,Line_image);    
     paintplot(Plot_image);
+
     //qDebug()<<globals::placeList[0].name;
 
 }
