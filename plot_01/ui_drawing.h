@@ -13,20 +13,31 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QWidget>
+#include "qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 
 class Ui_drawing
 {
 public:
+    QHBoxLayout *horizontalLayout;
+    QCustomPlot *customplot;
 
     void setupUi(QWidget *drawing)
     {
         if (drawing->objectName().isEmpty())
             drawing->setObjectName(QStringLiteral("drawing"));
         drawing->resize(400, 300);
+        horizontalLayout = new QHBoxLayout(drawing);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        customplot = new QCustomPlot(drawing);
+        customplot->setObjectName(QStringLiteral("customplot"));
+
+        horizontalLayout->addWidget(customplot);
+
 
         retranslateUi(drawing);
 

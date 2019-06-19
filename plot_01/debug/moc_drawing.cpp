@@ -65,7 +65,7 @@ void drawing::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
     if (_c == QMetaObject::InvokeMetaMethod) {
         drawing *_t = static_cast<drawing *>(_o);
         switch (_id) {
-        case 0: _t->Expand((*reinterpret_cast< Placeplot(*)>(_a[1]))); break;
+        //case 0: _t->Expand((*reinterpret_cast< Placeplot(*)>(_a[1]))); break;
         default: ;
         }
     }

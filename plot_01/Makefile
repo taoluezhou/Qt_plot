@@ -174,6 +174,7 @@ Makefile: plot_01.pro D:/chengxu/QT/Qt5.3.1/5.3/mingw482_32/mkspecs/win32-g++/qm
 		plot_01.pro \
 		D:/chengxu/QT/Qt5.3.1/5.3/mingw482_32/lib/qtmaind.prl \
 		D:/chengxu/QT/Qt5.3.1/5.3/mingw482_32/lib/Qt5Cored.prl \
+		D:/chengxu/QT/Qt5.3.1/5.3/mingw482_32/lib/Qt5PrintSupport.prl \
 		D:/chengxu/QT/Qt5.3.1/5.3/mingw482_32/lib/Qt5Widgets.prl \
 		D:/chengxu/QT/Qt5.3.1/5.3/mingw482_32/lib/Qt5Gui.prl \
 		D:/chengxu/QT/Qt5.3.1/5.3/mingw482_32/lib/Qt5Core.prl
@@ -293,6 +294,7 @@ D:\chengxu\QT\Qt5.3.1\5.3\mingw482_32\mkspecs\features\lex.prf:
 plot_01.pro:
 D:/chengxu/QT/Qt5.3.1/5.3/mingw482_32/lib/qtmaind.prl:
 D:/chengxu/QT/Qt5.3.1/5.3/mingw482_32/lib/Qt5Cored.prl:
+D:/chengxu/QT/Qt5.3.1/5.3/mingw482_32/lib/Qt5PrintSupport.prl:
 D:/chengxu/QT/Qt5.3.1/5.3/mingw482_32/lib/Qt5Widgets.prl:
 D:/chengxu/QT/Qt5.3.1/5.3/mingw482_32/lib/Qt5Gui.prl:
 D:/chengxu/QT/Qt5.3.1/5.3/mingw482_32/lib/Qt5Core.prl:

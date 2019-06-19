@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = plot_01
 TEMPLATE = app
@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     globals.cpp \
     subwindow.cpp \
-    drawing.cpp
+    drawing.cpp \
+    qcustomplot.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
     subwindow.h \
-    drawing.h
+    drawing.h \
+    qcustomplot.h
 
 FORMS    += mainwindow.ui \
     subwindow.ui \
